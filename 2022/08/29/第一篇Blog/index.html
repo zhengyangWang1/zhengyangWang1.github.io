@@ -6,15 +6,15 @@
   
   <title>第一篇Blog | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="目录-[下载Git]-[Git绑定Github]-[安装node.js]-[安装Hexo]  下载GitGit官网 Git绑定Github绑定Github我们要用git上传文件到GitHub首先得利用SSH[^SSH]登录远程主机，而登录方式有两种：一种是口令登录；另一种是公钥登录。口令登录每次都要输入密码十分麻烦，而公钥登录就省去了输入密码的步骤，所以我们选择公钥授权。首先我们得在 GitHub">
+  <meta name="description" content="目录 安装Hexo 下载Git Git绑定Github 绑定Github 提交文件(本地没有git仓库)   安装node.js 安装Hexo   下载GitGit官网 Git绑定Github绑定Github我们要用git上传文件到GitHub首先得利用SSH[^SSH]登录远程主机，而登录方式有两种：一种是口令登录；另一种是公钥登录。口令登录每次都要输入密码十分麻烦，而公钥登录就省去了输入密码的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="第一篇Blog">
 <meta property="og:url" content="http://example.com/2022/08/29/%E7%AC%AC%E4%B8%80%E7%AF%87Blog/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="目录-[下载Git]-[Git绑定Github]-[安装node.js]-[安装Hexo]  下载GitGit官网 Git绑定Github绑定Github我们要用git上传文件到GitHub首先得利用SSH[^SSH]登录远程主机，而登录方式有两种：一种是口令登录；另一种是公钥登录。口令登录每次都要输入密码十分麻烦，而公钥登录就省去了输入密码的步骤，所以我们选择公钥授权。首先我们得在 GitHub">
+<meta property="og:description" content="目录 安装Hexo 下载Git Git绑定Github 绑定Github 提交文件(本地没有git仓库)   安装node.js 安装Hexo   下载GitGit官网 Git绑定Github绑定Github我们要用git上传文件到GitHub首先得利用SSH[^SSH]登录远程主机，而登录方式有两种：一种是口令登录；另一种是公钥登录。口令登录每次都要输入密码十分麻烦，而公钥登录就省去了输入密码的">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-08-29T15:00:53.000Z">
-<meta property="article:modified_time" content="2022-08-29T16:02:36.772Z">
+<meta property="article:modified_time" content="2022-08-29T16:14:34.742Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="搭建个人网页">
 <meta name="twitter:card" content="summary">
@@ -96,27 +96,59 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><p>-[下载Git]<br>-[Git绑定Github]<br>-[安装node.js]<br>-[安装Hexo]</p>
+        <h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><ul>
+<li><a href="#%E5%AE%89%E8%A3%85hexo">安装Hexo</a></li>
+<li><a href="#%E4%B8%8B%E8%BD%BDgit">下载Git</a></li>
+<li><a href="#git%E7%BB%91%E5%AE%9Agithub">Git绑定Github</a><ul>
+<li><a href="#%E7%BB%91%E5%AE%9Agithub">绑定Github</a></li>
+<li><a href="#%E6%8F%90%E4%BA%A4%E6%96%87%E4%BB%B6%E6%9C%AC%E5%9C%B0%E6%B2%A1%E6%9C%89git%E4%BB%93%E5%BA%93">提交文件(本地没有git仓库)</a></li>
+</ul>
+</li>
+<li><a href="#%E5%AE%89%E8%A3%85nodejs">安装node.js</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85hexo">安装Hexo</a></li>
+</ul>
 <hr>
 <h2 id="下载Git"><a href="#下载Git" class="headerlink" title="下载Git"></a>下载Git</h2><p><a target="_blank" rel="noopener" href="https://git-scm.com/">Git官网</a></p>
-<h2 id="Git绑定Github"><a href="#Git绑定Github" class="headerlink" title="Git绑定Github"></a>Git绑定Github</h2><h3 id="绑定Github"><a href="#绑定Github" class="headerlink" title="绑定Github"></a>绑定Github</h3><p>我们要用git上传文件到GitHub首先得利用SSH[^SSH]登录远程主机，而登录方式有两种：一种是口令登录；另一种是公钥登录。口令登录每次都要输入密码十分麻烦，而公钥登录就省去了输入密码的步骤，所以我们选择公钥授权。首先我们得在 GitHub 上添加 SSH key 配置，要想生成SSH key，就要先安装 SSH，不过我们安装了 Git Bash，其应该自带了 SSH。<br>[^SSH]:SSH（安全外壳协议，Secure Shell 的缩写）是建立在应用层基础上的安全协议。SSH 是目前较可靠，专为远程登录会话和其他网络服务提供安全性的协议，利用 SSH 协议可以有效防止远程管理过程中的信息泄露问题。简单来说，SSH就是保障你的账户安全，将你的数据加密压缩，不仅防止其他人截获你的数据，还能加快传输速度。<br>![ssh]{}<br>然后，输入 ssh-keygen -t rsa 命令（注意空格），表示我们指定 RSA 算法生成密钥，然后敲四次回车键，之后就就会生成两个文件，分别为秘钥 id_rsa 和公钥 id_rsa.pub.。<br>接下来我们要做的事情就是把公钥 id_rsa.pub 的内容添加到 GitHub。复制公钥 id_rsa.pub 文件里的内容:<br>接下来进入我们的 GitHub 主页，先点击右上角，再点击 settings ,点击 SSH and GPG keys，再点击 New SSH key,将复制的公钥 id_rsa.pub 的内容粘贴到 key 内，再点击 Add SSH key。</p>
+<h2 id="Git绑定Github"><a href="#Git绑定Github" class="headerlink" title="Git绑定Github"></a>Git绑定Github</h2><h3 id="绑定Github"><a href="#绑定Github" class="headerlink" title="绑定Github"></a>绑定Github</h3><p>我们要用git上传文件到GitHub首先得利用SSH[^SSH]登录远程主机，而登录方式有两种：一种是口令登录；另一种是公钥登录。口令登录每次都要输入密码十分麻烦，而公钥登录就省去了输入密码的步骤，所以我们选择公钥授权。首先我们得在 GitHub 上添加 SSH key 配置，要想生成SSH key，就要先安装 SSH，不过我们安装了 Git Bash，其应该自带了 SSH。<br>[^SSH]:SSH（安全外壳协议，Secure Shell 的缩写）是建立在应用层基础上的安全协议。SSH 是目前较可靠，专为远程登录会话和其他网络服务提供安全性的协议，利用 SSH 协议可以有效防止远程管理过程中的信息泄露问题。简单来说，SSH就是保障你的账户安全，将你的数据加密压缩，不仅防止其他人截获你的数据，还能加快传输速度。</p>
+<p>然后，输入 ssh-keygen -t rsa 命令（注意空格），表示我们指定 RSA 算法生成密钥，然后敲四次回车键，之后就就会生成两个文件，分别为秘钥 id_rsa 和公钥 id_rsa.pub.。<br>接下来我们要做的事情就是把公钥 id_rsa.pub 的内容添加到 GitHub。复制公钥 id_rsa.pub 文件里的内容:<br>接下来进入我们的 GitHub 主页，先点击右上角，再点击 settings ,点击 SSH and GPG keys，再点击 New SSH key,将复制的公钥 id_rsa.pub 的内容粘贴到 key 内，再点击 Add SSH key。</p>
 <blockquote>
 <p>git中的复制粘贴不是 Ctrl+C 和 Ctrl+V，而是 Ctrl+insert 和Shift+insert。</p>
 </blockquote>
-<h3 id="提交文件-本地没有git仓库"><a href="#提交文件-本地没有git仓库" class="headerlink" title="提交文件(本地没有git仓库)"></a>提交文件(本地没有git仓库)</h3><p>进入GitHub个人主页，点击进入新建的 text 项目，点击 Clone or download，再复制地址，然后进入我们准备存储 Git 仓库的目录（在git仓库这个文件下右键打开Git Bash），接下来，输入 git clone <a target="_blank" rel="noopener" href="https://github.com/yourname/text.git%EF%BC%8C%E5%B0%86%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93">https://github.com/yourname/text.git，将远程仓库</a> clone 到本地。<br>现在我们在git仓库创建一个 text.txt 测试文件，从此目录进入 Git Bash，输入 git status 命令查看仓库状态。text 已经是一个 Git 仓库了，而我们刚刚创建的文件 text.txt 没有被追踪，也就是没有提交到本地仓库。现在我们使用 git add 命令将文件添加到了「临时缓冲区」，再用 git commit -m “提交信息” 将其提交到本地仓库。输入 git log 命令查看仓库提交日志。现在输入 git push origin main 命令，将本地仓库提交到远程仓库，这时Github就有了text文件。</p>
-<h3 id="安装node-js"><a href="#安装node-js" class="headerlink" title="安装node.js"></a>安装node.js</h3><p>[node.js官网]（<a target="_blank" rel="noopener" href="https://nodejs.org/en/%EF%BC%89">https://nodejs.org/en/）</a><br>安装完成可以用打开cmd检验一下是否安装成功，用 node -v 和 npm -v 命令检查版本<br><strong>设置npm在安装全局模块时的路径和环境变量：</strong><br>因为如果不设置的话，安装模块的时候就会把模块装到C盘，占用C盘的空间，并且有可能安装好hexo后却无法使用，所以我们需要设置一下：<br>在 nodejs 文件夹中新建两个空文件夹 node_cache、node_global，打开cmd，输入如下两个命令：<br>‘’’<br>npm config set prefix “D:\nodejs\node_global”<br>npm config set cache “D:\nodejs\node_cache”<br>‘’’<br>然后<strong>设置环境变量</strong>：在系统变量中新建一个变量名为“NODE_PATH”，值为:</p>
+<h3 id="提交文件-本地没有git仓库"><a href="#提交文件-本地没有git仓库" class="headerlink" title="提交文件(本地没有git仓库)"></a>提交文件(本地没有git仓库)</h3><p>进入GitHub个人主页，点击进入新建的 text 项目，点击 Clone or download，再复制地址，然后进入我们准备存储 Git 仓库的目录（在git仓库这个文件下右键打开Git Bash），接下来，输入 git clone <a target="_blank" rel="noopener" href="https://github.com/yourname/text.git">https://github.com/yourname/text.git</a> ，将远程仓库 clone 到本地。<br>现在我们在git仓库创建一个 text.txt 测试文件，从此目录进入 Git Bash，输入 git status 命令查看仓库状态。text 已经是一个 Git 仓库了，而我们刚刚创建的文件 text.txt 没有被追踪，也就是没有提交到本地仓库。现在我们使用 git add 命令将文件添加到了「临时缓冲区」，再用 git commit -m “提交信息” 将其提交到本地仓库。输入 git log 命令查看仓库提交日志。现在输入 git push origin main 命令，将本地仓库提交到远程仓库，这时Github就有了text文件。</p>
+<h3 id="安装node-js"><a href="#安装node-js" class="headerlink" title="安装node.js"></a>安装node.js</h3><p><a target="_blank" rel="noopener" href="https://nodejs.org/en/">node.js官网</a><br>安装完成可以用打开cmd检验一下是否安装成功，用 node -v 和 npm -v 命令检查版本<br><strong>设置npm在安装全局模块时的路径和环境变量：</strong><br>因为如果不设置的话，安装模块的时候就会把模块装到C盘，占用C盘的空间，并且有可能安装好hexo后却无法使用，所以我们需要设置一下：<br>在 nodejs 文件夹中新建两个空文件夹 node_cache、node_global，打开cmd，输入如下两个命令：</p>
 <blockquote>
-<p>D:\nodejs\node_modules<br>然后编辑用户变量里的Path，将相应npm的路径改为：<br>D:\nodejs\node_global</p>
+<p>npm config set prefix “D:\nodejs\node_global”<br>n&gt;pm config set cache “D:\nodejs\node_cache”</p>
 </blockquote>
-<h3 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h3><p>Hexo就是我们的个人博客网站的框架，在安装之前，我们要先在GitHub上创立一个仓库，名称为”yourname.github.io”(&#x3D;&#x3D;此处yourname必须和你github用户名相同&#x3D;&#x3D;)，访问权限选择Public。<br>接下来就是安装Hexo，首先在D盘建立一个文件夹 Blog，点开 Blog 文件夹，鼠标右键打开 Git Bush Here，输入npm命令安装Hexo：<br>‘’’<br>npm install -g hexo-cli<br>‘’’<br>安装完成后，输入 hexo init 命令初始化博客(可能会失败，多试几次)，然后输入 hexo g 静态部署，这时网页已经部署完成，输入 hexo s 命令可以查看。<br>现在回到我们的 Blog 文件夹，用笔记本打开 _config.yml 文件，下滑到文件底部，填上如下内容：<br>‘’’<br>deploy:<br>type: git<br>repository: <a target="_blank" rel="noopener" href="https://github.com/yourname/yourname.github.io.git">https://github.com/yourname/yourname.github.io.git</a>  #你的仓库地址<br>branch: main<br>‘’’<br>然后回到 Blog 文件夹中，打开 Git Bash，安装Git部署插件，输入命令:<br>‘’’<br>npm install hexo-deployer-git –save<br>‘’’<br>然后分别输入以下三条命令：<br>‘’’<br>hexo clean   #清除缓存文件 db.json 和已生成的静态文件 public<br>hexo g       #生成网站静态文件到默认设置的 public 文件夹(hexo generate 的缩写)<br>hexo d       #自动生成网站静态文件，并部署到设定的仓库(hexo deploy 的缩写)<br>‘’’</p>
+<p>然后<strong>设置环境变量</strong>：在系统变量中新建一个变量名为“NODE_PATH”，值为:</p>
 <blockquote>
-<p>这三条命令在更新博客时也会用到<br>完成以后，打开浏览器，输入 <a target="_blank" rel="noopener" href="https://yourname.github.io/">https://yourname.github.io</a> 就可以打开你的网页了:smlie</p>
+<p>D:\nodejs\node_modules</p>
 </blockquote>
+<p>然后编辑用户变量里的Path，将相应npm的路径改为：</p>
+<blockquote>
+<p>D:\nodejs\node_global</p>
+</blockquote>
+<h3 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h3><p>Hexo就是我们的个人博客网站的框架，在安装之前，我们要先在GitHub上创立一个仓库，名称为”yourname.github.io”(&#x3D;&#x3D;此处yourname必须和你github用户名相同&#x3D;&#x3D;)，访问权限选择Public。<br>接下来就是安装Hexo，首先在D盘建立一个文件夹 Blog，点开 Blog 文件夹，鼠标右键打开 Git Bush Here，输入npm命令安装Hexo：</p>
+<blockquote>
+<p>npm install -g hexo-cli</p>
+</blockquote>
+<p>安装完成后，输入 hexo init 命令初始化博客(可能会失败，多试几次)，然后输入 hexo g 静态部署，这时网页已经部署完成，输入 hexo s 命令可以查看。<br>现在回到我们的 Blog 文件夹，用笔记本打开 _config.yml 文件，下滑到文件底部，填上如下内容：</p>
+<blockquote>
+<p>deploy:<br>type: git<br>repository: <a target="_blank" rel="noopener" href="https://github.com/yourname/yourname.github.io.git">https://github.com/yourname/yourname.github.io.git</a>  #你的仓库地址<br>branch: main</p>
+</blockquote>
+<p>然后回到 Blog 文件夹中，打开 Git Bash，安装Git部署插件，输入命令:</p>
+<blockquote>
+<p>npm install hexo-deployer-git –save</p>
+</blockquote>
+<p>然后分别输入以下三条命令：</p>
+<blockquote>
+<p>hexo clean   #清除缓存文件 db.json 和已生成的静态文件 public<br>hexo g       #生成网站静态文件到默认设置的 public 文件夹(hexo generate 的缩写)<br>hexo d       #自动生成网站静态文件，并部署到设定的仓库(hexo deploy 的缩写)</p>
+</blockquote>
+<p>(这三条命令在更新博客时也会用到)<br>完成以后，打开浏览器，输入 <a target="_blank" rel="noopener" href="https://yourname.github.io/">https://yourname.github.io</a> 就可以打开你的网页了</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/08/29/%E7%AC%AC%E4%B8%80%E7%AF%87Blog/" data-id="cl7ey8xrk000044vjd74d1hpl" data-title="第一篇Blog" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/08/29/%E7%AC%AC%E4%B8%80%E7%AF%87Blog/" data-id="cl7eyod8w00013ovj3d6b35jy" data-title="第一篇Blog" class="article-share-link">Share</a>
       
       
       
