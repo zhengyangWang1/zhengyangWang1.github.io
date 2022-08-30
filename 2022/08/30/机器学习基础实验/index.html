@@ -22,17 +22,29 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="记录学习笔记和生活">
+  <meta name="description" content="本文介绍了监督学习和无监督学习的经典算法：线性回归以及k-means聚类算法。 目录线性回归（监督学习）k-means聚类（无监督学习）">
 <meta property="og:type" content="article">
 <meta property="og:title" content="机器学习基础实验">
 <meta property="og:url" content="http://example.com/2022/08/30/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E5%AE%9E%E9%AA%8C/index.html">
 <meta property="og:site_name" content="陽Space">
-<meta property="og:description" content="记录学习笔记和生活">
+<meta property="og:description" content="本文介绍了监督学习和无监督学习的经典算法：线性回归以及k-means聚类算法。 目录线性回归（监督学习）k-means聚类（无监督学习）">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s1.imagehub.cc/images/2022/08/30/Snipaste_2022-08-30_18-27-30.png">
+<meta property="og:image" content="https://s1.imagehub.cc/images/2022/08/30/Snipaste_2022-08-30_18-27-52.png">
+<meta property="og:image" content="https://s1.imagehub.cc/images/2022/08/30/Snipaste_2022-08-30_18-28-21.png">
+<meta property="og:image" content="https://s1.imagehub.cc/images/2022/08/30/Snipaste_2022-08-30_18-28-35.png">
+<meta property="og:image" content="https://s1.imagehub.cc/images/2022/08/30/Snipaste_2022-08-30_18-28-42.png">
+<meta property="og:image" content="https://s1.imagehub.cc/images/2022/08/30/Snipaste_2022-08-30_18-28-54.png">
+<meta property="og:image" content="https://s1.imagehub.cc/images/2022/08/30/Snipaste_2022-08-30_18-29-06.png">
+<meta property="og:image" content="https://s1.imagehub.cc/images/2022/08/30/Snipaste_2022-08-30_18-43-27.png">
+<meta property="og:image" content="https://s1.imagehub.cc/images/2022/08/30/Snipaste_2022-08-30_18-43-38.png">
+<meta property="og:image" content="https://s1.imagehub.cc/images/2022/08/30/output.png">
 <meta property="article:published_time" content="2022-08-30T05:18:32.000Z">
-<meta property="article:modified_time" content="2022-08-30T05:18:32.545Z">
+<meta property="article:modified_time" content="2022-08-30T11:36:47.766Z">
 <meta property="article:author" content="陽">
+<meta property="article:tag" content="人工智能">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s1.imagehub.cc/images/2022/08/30/Snipaste_2022-08-30_18-27-30.png">
 
 <link rel="canonical" href="http://example.com/2022/08/30/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E5%AE%9E%E9%AA%8C/">
 
@@ -175,8 +187,9 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2022-08-30 13:18:32" itemprop="dateCreated datePublished" datetime="2022-08-30T13:18:32+08:00">2022-08-30</time>
+              <time title="创建时间：2022-08-30 13:18:32 / 修改时间：19:36:47" itemprop="dateCreated datePublished" datetime="2022-08-30T13:18:32+08:00">2022-08-30</time>
             </span>
 
           
@@ -190,7 +203,99 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <p>本文介绍了监督学习和无监督学习的经典算法：线性回归以及k-means聚类算法。</p>
+<h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><p><a href="#%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0">线性回归（监督学习）</a><br><a href="#k-means%E8%81%9A%E7%B1%BB%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0">k-means聚类（无监督学习）</a></p>
+<span id="more"></span>
+<hr>
+<h1 id="线性回归（监督学习）"><a href="#线性回归（监督学习）" class="headerlink" title="线性回归（监督学习）"></a>线性回归（监督学习）</h1><p><strong>实验目的：</strong></p>
+<p>1.了解线性回归的基本原理<br>2.掌握通过梯度下降方法实现最优解的求解</p>
+<p><strong>实验环境：</strong> python，sklearn，numpy</p>
+<p><strong>实验步骤：</strong></p>
+<p>1、生成数据<br>2、定义画图函数、假设函数、损失函数、梯度计算函数、参数更新函数<br>3、定义线性回归函数，并测试</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># %matplotlib inline</span></span><br><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> make_regression <span class="comment">#导入 make_regression()函数，用来生成回归</span></span><br><span class="line">模型数据</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt <span class="comment">#导入 matplotlib.pyplot，并且重命名为 plt</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np <span class="comment">#导入 numpy 库，并且重命名为 np</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>函数 make_regression()：用来生成回归模型数据</li>
+<li>参数说明：<br>n_samples：样本数<br>n_features：特征数<br>noise：噪音<br>bias：偏差</li>
+<li>X : array of shape [n_samples, n_features]<br>y : array of shape [n_samples] or [n_samples, n_targets]</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X, y= make_regression(n_samples=<span class="number">100</span>, n_features=<span class="number">1</span>, noise=<span class="number">0.4</span>, bias=<span class="number">50</span>)</span><br></pre></td></tr></table></figure>
+<p>定义一个名为 plotLine()的函数，用来画出生成数据集的散点图和拟合线性模型(y&#x3D;k*x+b)</p>
+<ul>
+<li><p>参数说明：<br>theta0:即 y&#x3D;k<em>x+b 中的参数 b<br>theta1:即 y&#x3D;k</em>x+b 中的参数 k<br>X:数据集的横坐标（列表类型）<br>y:数据集的纵坐标（列表类型）</p>
+</li>
+<li><p>np.linspace(start, stop, num)函数：用来返回 num 个等间距的样本，在区间[start, stop]中。</p>
+</li>
+<li><p>plt.plot(x,y,color,label)：可视化函数<br>参数说明：color:用来设置线条的颜色，color&#x3D;’r’表示红色(b 表示蓝色)；label 用于指定标签</p>
+</li>
+<li><p>plt.scatter(x,y)：用来画散点图。</p>
+</li>
+<li><p>plt.axis(）函数用来指定坐标轴的范围。<br>参数需要以列表的形式给出。</p>
+</li>
+<li><p>plt.show()：将图像显示出。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">plotLine</span>(<span class="params">theta0, theta1, X, y</span>):</span><br><span class="line">    max_x = np.<span class="built_in">max</span>(X) + <span class="number">100</span> <span class="comment">#np.max(X)用来取出 X 中的最大值</span></span><br><span class="line">    min_x = np.<span class="built_in">min</span>(X) - <span class="number">100</span> <span class="comment">#np.min(X)用来取出 X 中的最小值</span></span><br><span class="line">    xplot = np.linspace(min_x, max_x, <span class="number">1000</span>) <span class="comment">#在区间[min_x,max_x]中返回 1000 个等间隔的样本</span></span><br><span class="line">    yplot = theta0 + theta1 * xplot <span class="comment">#将 x 带入线性方程 y=k*x+b 中求得 y</span></span><br><span class="line">    <span class="built_in">print</span>(theta0) <span class="comment">#打印参数 theta0</span></span><br><span class="line">    <span class="built_in">print</span>(theta1) <span class="comment">#打印参数 theta1</span></span><br><span class="line">    plt.plot(xplot, yplot, color=<span class="string">&#x27;g&#x27;</span>, label=<span class="string">&#x27;Regression Line&#x27;</span>) <span class="comment">#画出线性模型，参数依次表示：横坐标，纵坐标，颜色，标签</span></span><br><span class="line">    plt.scatter(X,y) <span class="comment">#画散点图，参数依次表示横坐标、纵坐标</span></span><br><span class="line">    plt.axis([-<span class="number">10</span>, <span class="number">10</span>, <span class="number">0</span>, <span class="number">200</span>]) <span class="comment">#设置横坐标范围为【-10，10】，纵轴范围为【0，200】</span></span><br><span class="line">    plt.show() <span class="comment">#显示可视化图像</span></span><br></pre></td></tr></table></figure>
+<p>定义一个函数返回y的估计值：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">hypothesis</span>(<span class="params">theta0, theta1, x</span>):</span><br><span class="line">    <span class="keyword">return</span> theta0 + (theta1 * x)</span><br></pre></td></tr></table></figure>
+<p>定义损失函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">cost</span>(<span class="params">theta0, theta1, X, y</span>):  <span class="comment"># 计算损失</span></span><br><span class="line">    costValue = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> (xi, yi) <span class="keyword">in</span> <span class="built_in">zip</span>(X, y):  <span class="comment"># 使用 zip()函数，包为元组的列表</span></span><br><span class="line">        costValue += <span class="number">0.5</span> * ((hypothesis(theta0, theta1, xi) - yi) ** <span class="number">2</span>)</span><br><span class="line">        <span class="keyword">return</span> costValue</span><br></pre></td></tr></table></figure>
+<p>定义名为 derivatives()的函数，用来计算参数的梯度：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">derivatives</span>(<span class="params">theta0, theta1, X, y</span>): <span class="comment">#derivative:导数</span></span><br><span class="line">    dtheta0 = <span class="number">0</span> <span class="comment">#dtheta0：参数 theta0 的梯度，初始化为 0</span></span><br><span class="line">    dtheta1 = <span class="number">0</span> <span class="comment">#dtheta0：参数 theta0 的梯度，初始化为 0</span></span><br><span class="line">    <span class="keyword">for</span> (xi, yi) <span class="keyword">in</span> <span class="built_in">zip</span>(X, y): <span class="comment">#使用 zip()函数依次取出(xi,yi)</span></span><br><span class="line">        dtheta0 += hypothesis(theta0, theta1, xi) - yi</span><br><span class="line">        dtheta1 += (hypothesis(theta0, theta1, xi) - yi)*xi <span class="comment">#计算公式为：损失函数对参数</span></span><br><span class="line">    dtheta0 /= <span class="built_in">len</span>(X) <span class="comment">#求平均梯度，len(X)函数用来计算 X 中的样本数</span></span><br><span class="line">    dtheta1 /= <span class="built_in">len</span>(X) <span class="comment">#求平均梯度</span></span><br><span class="line">    <span class="keyword">return</span> dtheta0,dtheta1</span><br></pre></td></tr></table></figure>
+<p>定义一个名为 updateParameters()的函数，用来对参数进行更新:</p>
+</li>
+<li><p>参数说明：<br>theta0 和 theta1 为待更新参数。<br>X、 y 分别表示横轴和纵轴的数值。<br>alpha：学习率。</p>
+</li>
+<li><p>参数的更新：<br>对于参数 w，其更新方式为：w&#x3D;w-学习率*梯度值。其中学习率是一个超参数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">updateParameters</span>(<span class="params">theta0, theta1, X, y, alpha</span>):  <span class="comment"># 参数的更新，alpha 表示学习率</span></span><br><span class="line">    dtheta0, dtheta1 = derivatives(theta0, theta1, X, y)  <span class="comment"># dtheta0, dtheta1 分 别 表 示 参 数</span></span><br><span class="line">    theta0 = theta0 - (alpha * dtheta0)  <span class="comment"># 依据参数更新方式更新参数 theta0</span></span><br><span class="line">    theta1 = theta1 - (alpha * dtheta1)  <span class="comment"># 依据参数更新方式更新参数 theta1</span></span><br><span class="line">    <span class="keyword">return</span> theta0, theta1  <span class="comment"># 返回更新好的参数</span></span><br></pre></td></tr></table></figure>
+<p>定义并调用一个名为 LinearRegression()的线性回归函数;</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">LinearRegression</span>(<span class="params">X, y</span>):</span><br><span class="line">    theta0 = np.random.rand()  <span class="comment"># 给 theta0 赋一个随机初始值。</span></span><br><span class="line">    theta1 = np.random.rand()  <span class="comment"># 给 theta1 赋一个随机初始值。</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="number">1000</span>):  <span class="comment"># 进行 1000 次参数的更新，每隔 100 次跟新打印一次图片</span></span><br><span class="line">        <span class="keyword">if</span> i % <span class="number">100</span> == <span class="number">0</span>:  <span class="comment"># 只有当 i 整除 100 时才进行一次图片打印</span></span><br><span class="line">            plotLine(theta0, theta1, X, y)</span><br><span class="line">            <span class="built_in">print</span>(cost(theta0, theta1, X, y))</span><br><span class="line">        theta0, theta1 = updateParameters(theta0, theta1, X, y, <span class="number">0.005</span>)</span><br><span class="line">LinearRegression(X, y) <span class="comment">#调用线性回归函数。</span></span><br></pre></td></tr></table></figure>
+<p>实验结果如下：<br><img src="https://s1.imagehub.cc/images/2022/08/30/Snipaste_2022-08-30_18-27-30.png" alt="g1"><br><img src="https://s1.imagehub.cc/images/2022/08/30/Snipaste_2022-08-30_18-27-52.png" alt="g2"><br><img src="https://s1.imagehub.cc/images/2022/08/30/Snipaste_2022-08-30_18-28-21.png" alt="g3"><br><img src="https://s1.imagehub.cc/images/2022/08/30/Snipaste_2022-08-30_18-28-35.png" alt="g4"><br><img src="https://s1.imagehub.cc/images/2022/08/30/Snipaste_2022-08-30_18-28-42.png" alt="g5"><br><img src="https://s1.imagehub.cc/images/2022/08/30/Snipaste_2022-08-30_18-28-54.png" alt="g6"><br><img src="https://s1.imagehub.cc/images/2022/08/30/Snipaste_2022-08-30_18-29-06.png" alt="g7"></p>
+</li>
+</ul>
+<hr>
+<p><strong>原理</strong><br>给定一组样本观测值x<del>i</del>,y<del>i</del>，(i&#x3D;1,2,…n)，要求回归函数尽可能拟合这组值。普通最小二乘法给出的判断标准是：残差平方和的值达到最小。<br>残差平方和的公式为：<br><img src="https://s1.imagehub.cc/images/2022/08/30/Snipaste_2022-08-30_18-43-27.png" alt="g8"><br>有两个未知参数的二次方程，画出来是一个三维空间中的图像，类似下面：<br><img src="https://s1.imagehub.cc/images/2022/08/30/Snipaste_2022-08-30_18-43-38.png" alt="g9"><br>导数为0时，Q取最小值，因此我们分别对\beta<del>1</del>和\beta<del>2</del>求偏导并令其为0。</p>
+<h1 id="k-means聚类（无监督学习）"><a href="#k-means聚类（无监督学习）" class="headerlink" title="k-means聚类（无监督学习）"></a>k-means聚类（无监督学习）</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br></pre></td></tr></table></figure>
+<p>定义一个名为 euclDistance()的函数，用来计算两个矩阵之间的欧式距离。其中参数vector1, vector2 分别表示两个矩阵。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">euclDistance</span>(<span class="params">vector1, vector2</span>):</span><br><span class="line">    <span class="keyword">return</span> sqrt(<span class="built_in">sum</span>(power(vector2 - vector1, <span class="number">2</span>))) <span class="comment">#求这两个矩阵的距离，vector1、2 均为矩阵</span></span><br></pre></td></tr></table></figure>
+<p>定义一个名为 initCentroids()的函数，用来在样本集中随机选取 k 个样本点作为初始<br>质心，其中参数 dataSet 为已给数据集，k 表示创建中心点的个数。返回值为所创建的 k 个中心点</p>
+<ul>
+<li>np.zeros([k, n])：用来创建一个 k 行 n 列的全 0 数组。</li>
+<li>np.random.uniform(a,b):返回区间[a,b)中的任意值。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#在样本集中随机选取 k 个样本点作为初始质心。</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">initCentroids</span>(<span class="params">dataSet, k</span>):</span><br><span class="line">    numSamples, dim = dataSet.shape <span class="comment">#矩阵的行数、列数 。</span></span><br><span class="line">    centroids = zeros((k, dim)) <span class="comment"># 创建一个 k 行 dim 列的全 0 数组。</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(k):</span><br><span class="line">        index = <span class="built_in">int</span>(random.uniform(<span class="number">0</span>, numSamples)) <span class="comment">#随机产生一个浮点数，然后将其转化为 int 型。</span></span><br><span class="line">        centroids[i, :] = dataSet[index, :] <span class="comment"># 将 dataSet 中 第 index+1 行 赋 值 给centroids 的第 i+1 行。</span></span><br><span class="line">    <span class="keyword">return</span> centroids</span><br></pre></td></tr></table></figure>
+定义一个名为 kmeans()的聚类算法，用于将 dataSet 矩阵中的样本分成 k 个类</li>
+<li>np.mat(a):用于将数组 a 转换为矩阵。</li>
+<li>np.zeros([k, n])：用来创建一个 k 行 n 列的全 0 数组。</li>
+<li>matrix.A:将矩阵类型转换为 array 类型。</li>
+<li>np.nonzero(array):用于得到数组 array 中非零元素的位置（数组索引）,参数 array 为<br>一个数组。</li>
+<li>np.mean()：求均值。</li>
+<li>plt.plot(x,y,color,marksize):当使用此函数画一个数据点时，参数 x 表示横坐标,参数 y 表示纵坐标，参数 color 用来指定点的颜色，参数 marksize 用来指示点的大小。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">kmeans</span>(<span class="params">dataSet, k</span>):</span><br><span class="line">    numSamples = dataSet.shape[<span class="number">0</span>] <span class="comment">#读取矩阵 dataSet 的第一维度的长度,即获得有多少个样本数据</span></span><br><span class="line">    clusterAssment = mat(zeros((numSamples, <span class="number">2</span>))) <span class="comment">#得到一个 N*2 的零矩阵,建立簇分配结果矩阵，第一列存类别，第二列存误差。</span></span><br><span class="line">    clusterChanged = <span class="literal">True</span> <span class="comment">#用来判断样本聚类结果是否变化的变量。</span></span><br><span class="line">    <span class="comment">## step 1: init centroids</span></span><br><span class="line">    centroids = initCentroids(dataSet, k) <span class="comment">#在样本集中随机选取 k 个样本点作为初始质心</span></span><br><span class="line">    <span class="keyword">while</span> clusterChanged:</span><br><span class="line">        clusterChanged = <span class="literal">False</span></span><br><span class="line">        <span class="comment">## for each sample</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(numSamples): <span class="comment">#range</span></span><br><span class="line">            minDist = <span class="number">100000.0</span> <span class="comment">#创建的一个临时变量，用来储存某个样本到所有聚类中心的最小距离。</span></span><br><span class="line">            minIndex = <span class="number">0</span> <span class="comment">#创建的一个临时变量，用来储存和某个样本距离最近的聚类中心的类别作为该样本的类别。</span></span><br><span class="line">            <span class="comment">## for each centroid</span></span><br><span class="line">            <span class="comment">## step 2: find the centroid who is closest</span></span><br><span class="line">            <span class="comment">#计算每个样本点与质点之间的距离，将其归内到距离最小的那一簇</span></span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(k):</span><br><span class="line">                distance = euclDistance(centroids[j, :], dataSet[i, :]) <span class="comment">#计算每个样本到每个聚类中心之间的距离。</span></span><br><span class="line">                <span class="keyword">if</span> distance &lt; minDist:</span><br><span class="line">                    minDist = distance</span><br><span class="line">                    minIndex = j</span><br><span class="line">            <span class="comment">## step 3: update its cluster</span></span><br><span class="line">            <span class="comment">#k 个簇里面与第 i 个样本距离最小的的标号和距离保存在 clusterAssment中</span></span><br><span class="line">            <span class="comment">#若所有的样本所属类别不在变化，则退出 while 循环</span></span><br><span class="line">            <span class="keyword">if</span> clusterAssment[i, <span class="number">0</span>] != minIndex:</span><br><span class="line">                clusterChanged = <span class="literal">True</span></span><br><span class="line">                clusterAssment[i, :] = minIndex, minDist**<span class="number">2</span> <span class="comment">#两个**表示的是 minDist的平方</span></span><br><span class="line">        <span class="comment">## step 4: update centroids</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(k):</span><br><span class="line">            <span class="comment">#clusterAssment[:,0].A==j 是找出矩阵 clusterAssment 中第一列元素中等于j 的行的下标，返回的是一个以 array 的列表，第一个 array 为等于 j 的下标</span></span><br><span class="line">            pointsInCluster = dataSet[nonzero(clusterAssment[:, <span class="number">0</span>].A == j)[<span class="number">0</span>]] <span class="comment">#将 dataSet矩阵中相对应的样本提取出来</span></span><br><span class="line">            centroids[j, :] = mean(pointsInCluster, axis = <span class="number">0</span>) <span class="comment">#计算标注为 j 的所有样本的平均值</span></span><br><span class="line">    <span class="built_in">print</span> (<span class="string">&#x27;Congratulations, cluster complete!&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> centroids, clusterAssment</span><br><span class="line"><span class="comment"># show your cluster only available with 2-D data</span></span><br><span class="line"><span class="comment">#centroids 为 k 个类别，其中保存着每个类别的质心</span></span><br><span class="line"><span class="comment">#clusterAssment 为样本的标记，第一列为此样本的类别号，第二列为到此类别质心的距离</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">showCluster</span>(<span class="params">dataSet, k, centroids, clusterAssment</span>):</span><br><span class="line">    numSamples, dim = dataSet.shape</span><br><span class="line">    <span class="keyword">if</span> dim != <span class="number">2</span>:</span><br><span class="line">        <span class="built_in">print</span> (<span class="string">&quot;Sorry! I can not draw because the dimension of your data is not 2!&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    mark = [<span class="string">&#x27;or&#x27;</span>, <span class="string">&#x27;ob&#x27;</span>, <span class="string">&#x27;og&#x27;</span>, <span class="string">&#x27;ok&#x27;</span>, <span class="string">&#x27;^r&#x27;</span>, <span class="string">&#x27;+r&#x27;</span>, <span class="string">&#x27;sr&#x27;</span>, <span class="string">&#x27;dr&#x27;</span>, <span class="string">&#x27;&lt;r&#x27;</span>, <span class="string">&#x27;pr&#x27;</span>] <span class="comment">#样本颜色</span></span><br><span class="line">    <span class="keyword">if</span> k &gt; <span class="built_in">len</span>(mark):</span><br><span class="line">        <span class="built_in">print</span> (<span class="string">&quot;Sorry! Your k is too large! please contact wojiushimogui&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="comment"># draw all samples</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(numSamples):</span><br><span class="line">        markIndex = <span class="built_in">int</span>(clusterAssment[i, <span class="number">0</span>]) <span class="comment">#为样本指定颜色</span></span><br><span class="line">        plt.plot(dataSet[i, <span class="number">0</span>], dataSet[i, <span class="number">1</span>], mark[markIndex]) <span class="comment">#画出样本</span></span><br><span class="line">    mark = [<span class="string">&#x27;Dr&#x27;</span>, <span class="string">&#x27;Db&#x27;</span>, <span class="string">&#x27;Dg&#x27;</span>, <span class="string">&#x27;Dk&#x27;</span>, <span class="string">&#x27;^b&#x27;</span>, <span class="string">&#x27;+b&#x27;</span>, <span class="string">&#x27;sb&#x27;</span>, <span class="string">&#x27;db&#x27;</span>, <span class="string">&#x27;&lt;b&#x27;</span>, <span class="string">&#x27;pb&#x27;</span>] <span class="comment">#中心的颜色</span></span><br><span class="line">    <span class="comment"># draw the centroids</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(k):</span><br><span class="line">        plt.plot(centroids[i, <span class="number">0</span>], centroids[i, <span class="number">1</span>], mark[i], markersize = <span class="number">12</span>) <span class="comment">#画出中心点</span></span><br><span class="line">    plt.show() <span class="comment">#显示图片</span></span><br></pre></td></tr></table></figure></li>
+<li>“.txt”文件的读取：<br>f&#x3D;open(file_path) #其中 f 叫做文件句柄，file_path 为文件所在的路径。<br>f.readlines()函数用来读取文件中的全部内容，返回值为一个列表，列表中的每个元素为每行对应的内容。<br>f.close()用来关闭所打开的文件。</li>
+<li>.strip()方法用于移除字符串头尾指定的字符（默认为空格或换行符）。</li>
+<li>.split(str)方法通过指定分隔符对字符串进行切片，其中参数 str 为分隔符，返回值为<br>一个列表。</li>
+<li>.append(obj)方法用于在列表末尾添加 obj。</li>
+</ul>
+<pre><code class="python">  ## step 1: 载入待聚类数据
+print (&quot;step 1: load data...&quot; )
+dataSet = [] #列表，用来表示，列表中的每个元素也是一个二维的列表；这个二维列表就是一个样本，样本中包含有我们的属性值和类别号。
+#与我们所熟悉的矩阵类似，最终我们将获得 N*2 的矩阵，每行元素构成了我们的训练样本的属性值和类别号
+fileIn = open(&quot;testdata.txt&quot;) #&quot;D:/testdata.txt&quot;为数据文件所在位置的绝对路径。
+for line in fileIn.readlines(): #依次遍历每一行
+    temp=[] #定义一个缓存列表
+    lineArr = line.strip().split(&#39;\t&#39;) #line.strip()把末尾的&#39;\n&#39;去掉，.split(&#39;\t&#39;)表示以&#39;\t&#39;为分隔符将字符串切片。
+    temp.append(float(lineArr[0])) #float(a)表示将 a 转化为 float 类型。
+    temp.append(float(lineArr[1]))
+    dataSet.append(temp) #向 dataSet 列表中添加元素。
+fileIn.close() #关闭刚刚打开的 testdata.txt 文件。
+## step 2: 聚类中... 
+print (&quot;step 2: clustering...&quot; )
+dataSet = mat(dataSet) #mat()函数是 Numpy 中的库函数，将数组转化为矩阵
+k = 4
+centroids, clusterAssment = kmeans(dataSet, k) #调用 KMeans 文件中定义的 kmeans 方法
+
+## step 3: 画图展示结果
+print (&quot;step 3: show the result...&quot; )
+showCluster(dataSet, k, centroids, clusterAssment)
+</code></pre>
+<p>实验结果如下<br><img src="https://s1.imagehub.cc/images/2022/08/30/output.png" alt="g10"><br><strong>原理</strong><br>聚类属于非监督学习，K均值聚类是最基础常用的聚类算法。它的基本思想是，通过迭代寻找K个簇（Cluster）的一种划分方案，使得聚类结果对应的损失函数最小。<br>KMeans最核心的部分就是先固定中心点，调整每个样本所属的类别来减少损失函数；再固定每个样本的类别，调整中心点继续减小损失函数。两个过程交替循环，损失函数单调递减直到最（极）小值，中心点和样本划分的类别同时收敛。</p>
+
     </div>
 
     
@@ -198,6 +303,9 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag"># 人工智能</a>
+          </div>
 
         
 
@@ -267,6 +375,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%EF%BC%88%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">线性回归（监督学习）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#k-means%E8%81%9A%E7%B1%BB%EF%BC%88%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">k-means聚类（无监督学习）</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -287,7 +396,7 @@
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
