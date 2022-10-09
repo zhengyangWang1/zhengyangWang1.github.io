@@ -24,7 +24,7 @@
 <meta property="og:description" content="基本  空值（NoneType）： 空值是Python里一个特殊的值，用 None 表示，一般用 None 填充表格中的缺失值。 使用 type() 函数来获取某值的类型。 12print type(2)print type(None)  算数运算符： a*b：a乘以b a&#x2F;b：a除以b a&#x2F;&#x2F;b: a除以b后向下圆整，丢弃小数部分 a**b： a的b次方 函数int(),float(),st">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-09-22T08:42:19.000Z">
-<meta property="article:modified_time" content="2022-09-27T12:04:31.805Z">
+<meta property="article:modified_time" content="2022-10-05T14:15:59.864Z">
 <meta property="article:author" content="陽">
 <meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary_large_image">
@@ -227,7 +227,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          3k 字
+          3.4k 字
         
       </span>
     
@@ -239,7 +239,7 @@
         
         
           <!-- compatible with older versions-->
-          25 分钟
+          28 分钟
         
       </span>
     
@@ -290,7 +290,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：星期二, 九月 27日 2022, 8:04 晚上
+                    本文最后更新于：星期三, 十月 5日 2022, 10:15 晚上
                   
                 
               </p>
@@ -375,11 +375,21 @@ isinstance()</p>
 <p>数据的写入</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">file2=<span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;abc.txt&#x27;</span>,<span class="hljs-string">&#x27;w&#x27;</span>)<br>file2.write(<span class="hljs-string">&#x27;abc&#x27;</span>) <span class="hljs-comment"># 覆盖文件原来的内容</span><br></code></pre></td></tr></table></figure>
 <p>csv文件的读写</p>
-<pre class="highlight"><code class="python"><span class="hljs-keyword">import</span> csv
-f=open(path,<span class="hljs-string">'w'</span>)
-writer=csv.writer(f)
-<span class="hljs-keyword">for</span> con <span class="hljs-keyword">in</span> writer:
-    writer.writerow(con)</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> csv<br>f=<span class="hljs-built_in">open</span>(path,<span class="hljs-string">&#x27;w&#x27;</span>)<br>writer=csv.writer(f)<br><span class="hljs-keyword">for</span> con <span class="hljs-keyword">in</span> writer:<br>    writer.writerow(con)<br></code></pre></td></tr></table></figure>
+<p>定义函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">write</span>(<span class="hljs-params">content</span>)<br>    <span class="hljs-keyword">if</span> <span class="hljs-built_in">isinstance</span>(content,<span class="hljs-built_in">str</span>):<br>        f=<span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;file.txt&#x27;</span>,<span class="hljs-string">&#x27;w&#x27;</span>)<br>        <span class="hljs-keyword">try</span>:<br>            f.write(content)<br>        <span class="hljs-keyword">except</span> Exception:<br>            <span class="hljs-keyword">return</span> -<span class="hljs-number">2</span><br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span><br>        <span class="hljs-keyword">finally</span>:<br>            f.close()<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+<p>网络爬虫</p>
+<pre class="highlight"><code class="python"><span class="hljs-keyword">import</span> urllib2
+request=urllib2.Request(<span class="hljs-string">''</span>)
+<span class="hljs-keyword">try</span>:
+    urllib2.urlopen(request)
+<span class="hljs-keyword">except</span> urllib2.URLError,e:
+    print(e.reason)
+<span class="hljs-keyword">except</span> urllib2.HTTPError,e:
+    print(e.code)
+<span class="hljs-keyword">else</span>:
+    print(<span class="hljs-string">'OK'</span>)
+</code></pre>
 
                 
               </div>
@@ -446,6 +456,12 @@ writer=csv.writer(f)
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2022/10/04/%E7%9F%A9%E9%98%B5%E7%90%86%E8%AE%BA%E4%B8%8E%E6%96%B9%E6%B3%95%E5%AE%9A%E4%B9%89/" title="矩阵理论与方法定义">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">矩阵理论与方法定义</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
