@@ -24,7 +24,7 @@
 <meta property="og:description" content="定义1.19 首项系数是1（简称首1），次数最小，且以矩阵A为根的λ\lambdaλ的多项式，称为A的最小多项式，常用m(λ)m(\lambda)m(λ)表示. 定理1.17 任意n阶矩阵与三角矩阵相似. 定理1.18 n阶矩阵A是其特征多项式的矩阵根（零点），即令$$ \varphi(\lambda)&#x3D;\operatorname{det}(\lambda \boldsymbol{I}-\bol">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-10-04T01:47:51.000Z">
-<meta property="article:modified_time" content="2022-11-09T03:37:20.086Z">
+<meta property="article:modified_time" content="2022-11-14T15:06:44.948Z">
 <meta property="article:author" content="陽">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -228,7 +228,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          5.1k 字
+          5.3k 字
         
       </span>
     
@@ -240,7 +240,7 @@
         
         
           <!-- compatible with older versions-->
-          43 分钟
+          45 分钟
         
       </span>
     
@@ -291,7 +291,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：星期三, 十一月 9日 2022, 11:37 中午
+                    本文最后更新于：星期一, 十一月 14日 2022, 11:06 晚上
                   
                 
               </p>
@@ -379,6 +379,22 @@ c_{1}|x|<em>{\beta} \leqslant|x|</em>{\alpha} \leqslant c_{2}|\boldsymbol{x}|_{\
 (2) $ \|\boldsymbol{A}\|_{2}=\sqrt{\lambda_{1}}, \quad \lambda_{1} $ 为 $ \boldsymbol{A}^{\mathrm{H}} \boldsymbol{A} $ 的最大特征值;
 (3) $ \|A\|_{\infty}=\max _{i} \sum_{j=1}^{n}\left|a_{i j}\right|$ .
 通常称 $ \|\boldsymbol{A}\|_{1},\|\boldsymbol{A}\|_{2} $ 及 $ \|\boldsymbol{A}\|_{\infty} $ 依次为列和范数、谱范数及行和范数.
+
+---
+
+**条件数** 在定理  2.8  中, 若令  $\operatorname{cond} (\boldsymbol{A})=\|\boldsymbol{A}\|\left\|\boldsymbol{A}^{-1}\right\|, d_{\boldsymbol{A}}=\|\delta \boldsymbol{A}\|\|\boldsymbol{A}\|^{-1}$ , 则当  $\left\|A^{-1}\right\|\|\delta A\|<1$  时, 由结论(2) 与(3) 可得:
+<p>\begin{array}{l}<br />
+\left|\boldsymbol{I}-\left(\boldsymbol{I}+\boldsymbol{A}^{-1} \delta \boldsymbol{A}\right)^{-1}\right| \leqslant \frac{d_{\boldsymbol{A}} \operatorname{cond}(\boldsymbol{A})}{1-d_{A} \operatorname{cond}(\boldsymbol{A})} \<br />
+\frac{\left|\boldsymbol{A}^{-1}-(\boldsymbol{A}+\delta \boldsymbol{A})<sup>{-1}\right|}{\left|\boldsymbol{A}</sup>{-1}\right|} \leqslant \frac{d_{A} \operatorname{cond}(\boldsymbol{A})}{1-d_{\boldsymbol{A}} \operatorname{cond}(\boldsymbol{A})}<br />
+\end{array}</p>
+称  $\operatorname{cond}(A)$  为矩阵  $A$  的条件数, 它是求矩阵逆的摄动的一个重要量. 一般说来, 条件数愈大,  $(A+\delta A)^{-1}$  与  $A^{-1}$  的相对误差就愈大.
+
+**定义  2.5**  设  $A \in C^{n \times n}$  的  n  个特征值为  $\lambda_{1}, \lambda_{2}, \cdots, \lambda_{n}$ , 称$$\rho(\boldsymbol{A})=\max _{i}\left|\lambda_{i}\right|$$为 $A$  的谱半径.
+
+
+**定理  2.9**  设  A $\in C^{n \times n}$ , 则对  $C^{n \times n}$  上任何一种矩阵范数  $\|\cdot\|$ , 都有$\rho(\boldsymbol{A}) \leqslant\|\boldsymbol{A}\|$.
+
+**定理  2.10**  设  A $\in C^{n X_{n}}$ , 对任意的正数  $\varepsilon$ , 存在某种矩阵范数  $\|\cdot\| M$ , 使得$\|\boldsymbol{A}\|_{M} \leqslant \rho(\boldsymbol{A})+\varepsilon$.
 
                 
               </div>
