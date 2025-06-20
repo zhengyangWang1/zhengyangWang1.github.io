@@ -1,0 +1,763 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="算法流程描述首先，对数据集进行预处理。本实验使用scene_categories数据集，该数据集包括15个类别（文件夹名就是类别名），每个类中编号前150号的样本作为训练样本，15个类一共2250张训练样本；剩下的样本构成测试集合。对数据进行SIFT特征提取，得到每张图片的描述符，作为训练数据。然后，使用KMeans算法对SIFT特征进行聚类，得到视觉词汇，然后计算图像的词袋模型，将图像的词汇表">
+<meta property="og:type" content="article">
+<meta property="og:title" content="词袋模型+SVM图像分类">
+<meta property="og:url" content="http://example.com/2025/06/20/Notes/%E8%AF%BE%E7%A8%8B/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/%E8%AF%8D%E8%A2%8B%E6%A8%A1%E5%9E%8B+SVM%E5%9B%BE%E5%83%8F%E5%88%86%E7%B1%BB/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="算法流程描述首先，对数据集进行预处理。本实验使用scene_categories数据集，该数据集包括15个类别（文件夹名就是类别名），每个类中编号前150号的样本作为训练样本，15个类一共2250张训练样本；剩下的样本构成测试集合。对数据进行SIFT特征提取，得到每张图片的描述符，作为训练数据。然后，使用KMeans算法对SIFT特征进行聚类，得到视觉词汇，然后计算图像的词袋模型，将图像的词汇表">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhengyangWang1/image@main/img/20240429000700.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/zhengyangWang1/image@main/img/Figure_1.png">
+<meta property="article:published_time" content="2025-06-20T07:57:51.073Z">
+<meta property="article:modified_time" content="2025-06-20T07:57:51.073Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/zhengyangWang1/image@main/img/20240429000700.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>词袋模型+SVM图像分类 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":100,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>阳</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://cdn.jsdelivr.net/gh/zhengyangWang1/image@main/img/edc7fcb0880411ebb6edd017c2d2eca2.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="词袋模型+SVM图像分类"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          33 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">词袋模型+SVM图像分类</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <hr>
+<h3 id="算法流程描述"><a href="#算法流程描述" class="headerlink" title="算法流程描述"></a>算法流程描述</h3><p>首先，对数据集进行预处理。本实验使用scene_categories数据集，该数据集包括15个类别（文件夹名就是类别名），每个类中编号前150号的样本作为训练样本，15个类一共2250张训练样本；剩下的样本构成测试集合。对数据进行SIFT特征提取，得到每张图片的描述符，作为训练数据。<br>然后，使用KMeans算法对SIFT特征进行聚类，得到视觉词汇，然后计算图像的词袋模型，将图像的词汇表示和标签作为SVM的训练数据，得到训练好的SVM分类器。<br>对测试数据集中的每张图像，同样根据构建的视觉词汇，计算图像的词袋表示。使用训练好的SVM分类器对测试数据集进行分类预测，并计算分类准确率。<br>使用分类预测结果和真实标签计算混淆矩阵，然后用matplotlib绘制其热力图。</p>
+<h3 id="函数功能说明"><a href="#函数功能说明" class="headerlink" title="函数功能说明"></a>函数功能说明</h3><p><code>extract_sift_features</code> 将输入的彩色图像转换为灰度图像，然后使用SIFT算法检测图像中的关键点，并计算这些关键点的SIFT特征描述符。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">extract_sift_features</span>(<span class="hljs-params">image</span>):<br>    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)<br>    sift = cv2.SIFT_create()<br>    keypoints, descriptors = sift.detectAndCompute(gray, <span class="hljs-literal">None</span>)<br>    <span class="hljs-keyword">return</span> descriptors<br></code></pre></td></tr></table></figure>
+<p><code>preprocess_data</code> 对输入的图像路径列表进行预处理，提取每张图像的SIFT特征描述符，并将所有特征描述符拼接成一个特征矩阵返回。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">preprocess_data</span>(<span class="hljs-params">img_paths</span>):<br>    features = []<br>    <span class="hljs-keyword">for</span> img_path <span class="hljs-keyword">in</span> img_paths:<br>        image = cv2.imread(img_path)<br>        <span class="hljs-keyword">if</span> image <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>            sift_features = extract_sift_features(image)<br>            <span class="hljs-keyword">if</span> sift_features <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>                features.append(sift_features)<br>    <span class="hljs-keyword">return</span> np.concatenate(features, axis=<span class="hljs-number">0</span>)<br></code></pre></td></tr></table></figure>
+<p><code>build_vocabulary</code> 使用K均值聚类算法对给定的特征集进行聚类，并构建一个视觉词汇，返回聚类中心。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">build_vocabulary</span>(<span class="hljs-params">features, vocab_size</span>):<br>    kmeans = KMeans(n_clusters=vocab_size)<br>    kmeans.fit(features)<br>    <span class="hljs-keyword">return</span> kmeans.cluster_centers_<br></code></pre></td></tr></table></figure>
+<p><code>compute_bovw</code> 根据给定的特征和视觉词汇计算图像的词袋表示，并返回词袋表示。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">compute_bovw</span>(<span class="hljs-params">features, vocabulary</span>):<br>    kmeans = KMeans(n_clusters=vocabulary.shape[<span class="hljs-number">0</span>], init=vocabulary, n_init=<span class="hljs-number">1</span>, max_iter=<span class="hljs-number">1</span>)<br>    kmeans.fit(vocabulary)<br>    bovw_representation = np.zeros((<span class="hljs-number">1</span>, vocabulary.shape[<span class="hljs-number">0</span>]))<br>    <span class="hljs-keyword">if</span> features <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>        assignments = kmeans.predict(features)<br>        <span class="hljs-keyword">for</span> assignment <span class="hljs-keyword">in</span> assignments:<br>            bovw_representation[<span class="hljs-number">0</span>, assignment] += <span class="hljs-number">1</span><br>    <span class="hljs-keyword">return</span> bovw_representation<br></code></pre></td></tr></table></figure>
+
+<p>在主函数中，首先按每个类别前150个数据为训练数据的原创对原始数据进行训练集和测试集的划分，然后调用上面的函数进行SIFT特征提取、计算词汇表、计算词袋模型，然后训练svm分类器，对测试数据的词袋表示进行预测，计算预测结果与真实结果的准确率与混淆矩阵，并将混淆矩阵可视化。</p>
+<p>数据划分：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 加载和预处理训练数据</span><br>train_labels = []<br>test_labels = []<br>train_img_paths = []<br>test_img_paths  = []<br><span class="hljs-keyword">for</span> path, dirs, files <span class="hljs-keyword">in</span> os.walk(img_path):<br>    <span class="hljs-keyword">for</span> i, file <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(files):<br>        <span class="hljs-keyword">if</span> (i &lt; <span class="hljs-number">150</span>):<br>            train_img_paths.append(os.path.join(path, file))<br>        <span class="hljs-keyword">else</span>:<br>            test_img_paths.append(os.path.join(path, file))<br>    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">len</span>(files) &gt; <span class="hljs-number">0</span>):<br>        train_labels.extend([path.split(<span class="hljs-string">&#x27;/&#x27;</span>)[-<span class="hljs-number">1</span>]] * <span class="hljs-number">150</span>)<br>        test_labels.extend([path.split(<span class="hljs-string">&#x27;/&#x27;</span>)[-<span class="hljs-number">1</span>]] * (<span class="hljs-built_in">len</span>(files) - <span class="hljs-number">150</span>))<br></code></pre></td></tr></table></figure>
+
+<p>训练和测试：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 训练SVM分类器</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;正在训练SVM分类器...&quot;</span>)<br>clf = SVC(kernel=<span class="hljs-string">&#x27;linear&#x27;</span>)<br>clf.fit(train_bovw, train_labels)<br><br><span class="hljs-comment"># 测试词袋</span><br>test_bovw = []<br><span class="hljs-keyword">for</span> img_path <span class="hljs-keyword">in</span> tqdm(test_img_paths, desc=<span class="hljs-string">&quot;正在测试分类器&quot;</span>):<br>    image_features = preprocess_data([img_path])<br>    bovw_representation = compute_bovw(image_features, vocabulary)<br>    test_bovw.append(bovw_representation)<br>test_bovw = np.concatenate(test_bovw, axis=<span class="hljs-number">0</span>)<br><br><span class="hljs-comment"># 预测并评估分类器</span><br>predictions = clf.predict(test_bovw)<br>accuracy = accuracy_score(test_labels, predictions)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;准确率:&#123;:.3f&#125;%&quot;</span>.<span class="hljs-built_in">format</span>(accuracy*<span class="hljs-number">100</span>))<br></code></pre></td></tr></table></figure>
+
+<p>计算并可视化混淆矩阵：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 计算混淆矩阵</span><br>conf_mat = confusion_matrix(test_labels, predictions)<br>normalized_conf_mat = conf_mat.astype(<span class="hljs-string">&#x27;float&#x27;</span>) / conf_mat.<span class="hljs-built_in">sum</span>(axis=<span class="hljs-number">1</span>)[:, np.newaxis]<br><br>categories = [<span class="hljs-string">&#x27;00&#x27;</span>, <span class="hljs-string">&#x27;01&#x27;</span>, <span class="hljs-string">&#x27;02&#x27;</span>, <span class="hljs-string">&#x27;03&#x27;</span>, <span class="hljs-string">&#x27;04&#x27;</span>, <span class="hljs-string">&#x27;05&#x27;</span>, <span class="hljs-string">&#x27;06&#x27;</span>, <span class="hljs-string">&#x27;07&#x27;</span>, <span class="hljs-string">&#x27;08&#x27;</span>, <span class="hljs-string">&#x27;09&#x27;</span>, <span class="hljs-string">&#x27;10&#x27;</span>, <span class="hljs-string">&#x27;11&#x27;</span>, <span class="hljs-string">&#x27;12&#x27;</span>, <span class="hljs-string">&#x27;13&#x27;</span>, <span class="hljs-string">&#x27;14&#x27;</span>]<br><br><span class="hljs-comment"># 绘制混淆矩阵</span><br>plt.figure(figsize=(<span class="hljs-number">10</span>, <span class="hljs-number">8</span>))<br>heatmap = sns.heatmap(normalized_conf_mat, annot=<span class="hljs-literal">True</span>, fmt=<span class="hljs-string">&#x27;.2f&#x27;</span>, cmap=<span class="hljs-string">&#x27;Blues&#x27;</span>, cbar=<span class="hljs-literal">False</span>)<br><br>heatmap.set_xticks(np.arange(<span class="hljs-built_in">len</span>(categories))+<span class="hljs-number">0.5</span>)<br><span class="hljs-comment"># 设置横坐标刻度标签为类别名称</span><br>heatmap.set_xticklabels(categories, rotation=<span class="hljs-number">45</span>, ha=<span class="hljs-string">&#x27;right&#x27;</span>)<br><br><span class="hljs-comment"># 设置纵坐标刻度在类别中心</span><br>heatmap.set_yticks(np.arange(<span class="hljs-built_in">len</span>(categories))+<span class="hljs-number">0.5</span>)<br><span class="hljs-comment"># 设置纵坐标刻度标签为类别名称</span><br>heatmap.set_yticklabels(categories, rotation=<span class="hljs-number">0</span>)<br><br>plt.xlabel(<span class="hljs-string">&#x27;预测类别&#x27;</span>)<br>plt.ylabel(<span class="hljs-string">&#x27;真实类别&#x27;</span>)<br>plt.title(<span class="hljs-string">&#x27;预测结果的混淆矩阵&#x27;</span>)<br>plt.show()<br></code></pre></td></tr></table></figure>
+
+<h3 id="函数参数说明"><a href="#函数参数说明" class="headerlink" title="函数参数说明"></a>函数参数说明</h3><p><code>extract_sift_features</code>:<br>    - <code>image</code>: 输入的图像，是一个三维的NumPy数组，表示为(height, width, channels)。<br><code>preprocess_data</code>:<br>    - <code>img_paths</code>: 包含图像文件路径的列表，用于指定要预处理的图像数据集。<br><code>build_vocabulary</code>:<br>    - <code>features</code>: 特征矩阵，是一个二维NumPy数组，每行代表一个特征向量。<br>    - <code>vocab_size</code>: 视觉词汇的大小，即要构建的聚类中心数量。<br><code>compute_bovw</code>:<br>    - <code>features</code>: 特征矩阵，是一个二维NumPy数组，每行代表一个特征向量。<br>    - <code>vocabulary</code>: 视觉词汇，是一个二维NumPy数组，每行代表一个聚类中心。</p>
+<h3 id="结果分析"><a href="#结果分析" class="headerlink" title="结果分析"></a>结果分析</h3><p>在实验中发现，适当增大<code>vocab_size</code>可以带来更高的准确率，但考虑设备性能，最终选择的值为3000。<br>最终准确率如下：<br><img src="https://cdn.jsdelivr.net/gh/zhengyangWang1/image@main/img/20240429000700.png" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p>预测结果的混淆矩阵如下，其中每行之和为1，每个元素为预测类别在帧数类别中所占比例：<br><img src="https://cdn.jsdelivr.net/gh/zhengyangWang1/image@main/img/Figure_1.png" srcset="/img/loading.gif" lazyload alt="Figure_1.png"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Notes/" class="category-chain-item">Notes</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Notes/%E8%AF%BE%E7%A8%8B/" class="category-chain-item">课程</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Notes/%E8%AF%BE%E7%A8%8B/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/" class="category-chain-item">计算机视觉</a>
+  
+  
+
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>词袋模型+SVM图像分类</div>
+      <div>http://example.com/2025/06/20/Notes/课程/计算机视觉/词袋模型+SVM图像分类/</div>
+    </div>
+    <div class="license-meta">
+      
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/06/20/Notes/%E8%AF%BE%E7%A8%8B/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/%E7%9B%AE%E6%A0%87%E8%B7%9F%E8%B8%AA/" title="目标跟踪">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">目标跟踪</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/06/20/Notes/%E8%AF%BE%E7%A8%8B/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/%E8%AF%BE%E7%A8%8B%E4%BB%8B%E7%BB%8D/" title="课程介绍">
+                        <span class="hidden-mobile">课程介绍</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"Gu5ECxvGGmgKCcp5rU4dq6mf-gzGzoHsz","appKey":"yhwIunMgUsQgFKezVjcG9sYe","path":"window.location.pathname","placeholder":"留言","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":true},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+      <div class="col-lg-7 mx-auto nopadding-x-md">
+        <div class="container custom mx-auto">
+          <link rel="stylesheet" href="/node_modules/hexo-theme-fluid/source/dist/APlayer.min.css"> <div id="aplayer"></div> <script type="text/javascript" src="/node_modules/hexo-theme-fluid/source/dist/APlayer.min.js"></script> <script type="text/javascript" src="/node_modules/hexo-theme-fluid/source/dist/music.js"></script> 
+        </div>
+      </div>
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <i class="iconfont icon-love"></i> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
